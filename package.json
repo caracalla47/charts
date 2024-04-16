@@ -26,6 +26,7 @@
     "@c8y/style": "1019.18.0",
     "@c8y/websdk": "^1019.18.0",
     "chart.js": "^4.4.2",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "ng2-charts": "^5.0.4",
     "ngx-bootstrap": "11.0.2",
     "rxjs": "^7.4.0",

@@ -1,6 +1,6 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef }  from '@angular/core';
+import { Component, OnInit }  from '@angular/core';
 
-import { ChartData, ChartOptions, ChartTypeRegistry } from 'chart.js';
+import { ChartData, ChartOptions } from 'chart.js';
 
 import { BarChartConfig, PieChartConfig } from '../app.models';
 import { ChartsService } from './charts.service';
@@ -9,7 +9,7 @@ import { ChartsService } from './charts.service';
     selector: 'app-charts',
     templateUrl: './charts.component.html'
 })
-export class ChartsComponent implements OnInit, AfterViewInit{
+export class ChartsComponent implements OnInit{
     constructor(private charts: ChartsService){}
 
     barChartConfig!: BarChartConfig;
@@ -17,10 +17,8 @@ export class ChartsComponent implements OnInit, AfterViewInit{
 
     // #region Angular Lifecycle events
     ngOnInit(): void {
-        this.resetCharts();        
-    }
-
-    ngAfterViewInit(): void {
+       this.resetCharts();  
+        
        let barChartLabels = ['Location A', 'Location B', 'Location C'];
        let barChartData = [24, 38, 19];
        let barChartTitle = 'Errors per Location'
@@ -68,6 +66,7 @@ export class ChartsComponent implements OnInit, AfterViewInit{
 
     drawPieChart(labels: string[], data: number[], hoverOffset?: number): void {
         this.pieChartConfig.data = this.charts.getPieChartData(labels, data, hoverOffset);
+        this.pieChartConfig.options = this.charts.getPieChartOptions();
     }
     //#endregion
 }

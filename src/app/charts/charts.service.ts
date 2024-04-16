@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+
 import { ChartData, ChartOptions } from 'chart.js';
+import 'chartjs-plugin-datalabels';
 
 @Injectable({
     providedIn: 'root'
@@ -8,8 +10,7 @@ export class ChartsService{
 
     //#region Bar Chart methods
     getBarChartData(labels: string[], data: number[]): ChartData{
-        let chartData: ChartData;
-        chartData = {
+       return { 
             labels: labels,
             datasets: [
                 {
@@ -19,12 +20,10 @@ export class ChartsService{
                 }
             ]
         }
-        return chartData;
     }
 
     getBarChartOptions(chartTitle?: string): ChartOptions {
-        let chartOptions: ChartOptions;
-        chartOptions = {
+        return {
             responsive: true,
             maintainAspectRatio: true,
             scales: {
@@ -42,14 +41,12 @@ export class ChartsService{
 
             }
         }
-        return chartOptions;
     }
     //#endregion 
 
     //#region Pie Chart methods
     getPieChartData(labels: string[], data: number[], hoverOffset?: number): ChartData{
-        let chartData: ChartData;
-        chartData = {
+        return {
             labels: labels,
             datasets: [
                 {
@@ -59,7 +56,25 @@ export class ChartsService{
                 },
             ],
         }
-        return chartData;
     }
+
+    getPieChartOptions(): ChartOptions {
+        return {
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    // Ensure we're working with numbers only
+                    const numericData = context.dataset.data.map(item => typeof item === 'number' ? item : 0);
+                    const total = numericData.reduce((a, b) => a + b, 0);
+                    const value = numericData[context.dataIndex];
+                    const percentage = ((value / total) * 100).toFixed(2);
+                    return `${context.label}: ${value} (${percentage}%)`;
+                  }
+                }
+              }
+            }
+          }
+    }     
     //#endregion
 }
