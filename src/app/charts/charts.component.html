@@ -1,0 +1,19 @@
+<div class="container">
+    <h1>Charts Component</h1>
+    <div class="row">
+        <div class="col-md-6" *ngIf="barChartConfig.data.datasets.length > 0">
+            <canvas baseChart
+                    [data]="barChartConfig.data"
+                    [options]="barChartConfig.options"
+                    [type]="barChartConfig.type"
+            ></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas baseChart  
+                    [data]="pieChartConfig.data"
+                    [type]="pieChartConfig.type"
+            ></canvas>
+        </div>
+    </div>
+</div>
+

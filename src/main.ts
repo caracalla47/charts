@@ -1,7 +1,19 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import './i18n';
+import { applyOptions, loadOptions, loginOptions } from '@c8y/bootstrap';
 
-import { AppModule } from './app/app.module';
+const barHolder: HTMLElement = document.querySelector('body > .init-load');
+export const removeProgress = () => barHolder && barHolder.parentNode.removeChild(barHolder);
 
+applicationSetup();
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+async function applicationSetup() {
+  const options = await applyOptions({
+    ...(await loadOptions()),
+    ...((await loginOptions()) as object)
+  });
+
+  const mod = await import('./bootstrap');
+  const bootstrapApp = mod.bootstrap || (window as any).bootstrap || (() => null);
+
+  return Promise.resolve(bootstrapApp(options)).then(removeProgress);
+}

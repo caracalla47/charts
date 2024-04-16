@@ -1,18 +1,23 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule as ngRouterModule } from '@angular/router';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { CoreModule, BootstrapComponent } from '@c8y/ngx-components';
+import { NgChartsModule } from 'ng2-charts';
+
+import { ChartsComponent } from './charts/charts.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [ChartsComponent],
   imports: [
-    BrowserModule,
-    AppRoutingModule
+    BrowserAnimationsModule,
+    ngRouterModule.forRoot(
+      [ {path: '', component: ChartsComponent}],
+      { enableTracing: false, useHash: true }
+    ), 
+    CoreModule.forRoot(),
+    NgChartsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [BootstrapComponent]
 })
-export class AppModule { }
+export class AppModule {}
