@@ -10,7 +10,7 @@ import { ChartsService } from './charts.service';
     templateUrl: './charts.component.html'
 })
 export class ChartsComponent implements OnInit{
-    constructor(private charts: ChartsService){}
+    constructor(private charts: ChartsService){}    
 
     barChartConfig!: BarChartConfig;
     pieChartConfig!: PieChartConfig;
@@ -53,8 +53,16 @@ export class ChartsComponent implements OnInit{
        return this.charts.getBarChartData(labels, data);
     }
 
-    getBarChartOptions(chartTitle?: string): ChartOptions {
+     getBarChartOptions(chartTitle?: string): ChartOptions {
         return this.charts.getBarChartOptions(chartTitle);
+    }
+
+    getPieChartData(labels: string[], data: number[], hoverOffset?: number): ChartData{
+        return this.charts.getPieChartData(labels, data, hoverOffset);
+    }
+
+    getPieChartOptions(): ChartOptions {
+        return this.charts.getPieChartOptions();
     }
     // #endregion
 
@@ -65,8 +73,8 @@ export class ChartsComponent implements OnInit{
     }
 
     drawPieChart(labels: string[], data: number[], hoverOffset?: number): void {
-        this.pieChartConfig.data = this.charts.getPieChartData(labels, data, hoverOffset);
-        this.pieChartConfig.options = this.charts.getPieChartOptions();
+        this.pieChartConfig.data = this.getPieChartData(labels, data, hoverOffset);
+        this.pieChartConfig.options = this.getPieChartOptions();
     }
     //#endregion
 }

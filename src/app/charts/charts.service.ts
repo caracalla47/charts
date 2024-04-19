@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { ChartData, ChartOptions } from 'chart.js';
+import { ChartData, ChartOptions, ChartTypeRegistry, TooltipModel } from 'chart.js';
+
 import 'chartjs-plugin-datalabels';
 
 @Injectable({
@@ -16,7 +17,7 @@ export class ChartsService{
                 {
                     label: 'Unique errors',
                     data: data,
-                    barPercentage: 0.6
+                    barPercentage: 0.7
                 }
             ]
         }
@@ -37,6 +38,7 @@ export class ChartsService{
                         size: 28
                     },
                     display: chartTitle? true : false,
+                    text: chartTitle
                 }
 
             }
@@ -63,7 +65,7 @@ export class ChartsService{
             plugins: {
               tooltip: {
                 callbacks: {
-                  label: function(context) {
+                  label: function(this: TooltipModel<keyof ChartTypeRegistry>, context) {
                     // Ensure we're working with numbers only
                     const numericData = context.dataset.data.map(item => typeof item === 'number' ? item : 0);
                     const total = numericData.reduce((a, b) => a + b, 0);
@@ -74,7 +76,7 @@ export class ChartsService{
                 }
               }
             }
-          }
-    }     
+        }
+    }
     //#endregion
 }
