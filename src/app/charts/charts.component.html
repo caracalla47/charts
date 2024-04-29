@@ -1,7 +1,7 @@
 <div class="container">
     <h1>Charts Component</h1>
-    <div class="row">
-        <div class="col-md-6" *ngIf="barChartConfig.data.datasets.length > 0">
+    <div class="row" *ngIf="barChartConfig.data.datasets.length > 0">
+        <div class="col-md-6" >
             <canvas baseChart
                     [data]="barChartConfig.data"
                     [options]="barChartConfig.options"
